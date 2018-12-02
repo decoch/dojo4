@@ -9,32 +9,25 @@ type FortuneSlip struct {
 	Result FortuneSlipType `json:"result"`
 }
 
-func DrawFortuneSlip() FortuneSlip {
-	t := NewFortuneShipType(time.Now())
-	return FortuneSlip{
-		Result: t,
-	}
-}
-
 type FortuneSlipType string
 
 const (
-	daikichi FortuneSlipType = "大吉"
-	chukichi                 = "中吉"
-	kichi                    = "吉"
-	kyo                      = "凶"
+	Daikichi FortuneSlipType = "大吉"
+	Chukichi                 = "中吉"
+	Kichi                    = "吉"
+	Kyo                      = "凶"
 )
 
 var fortuneShips = []FortuneSlipType{
-	daikichi,
-	chukichi,
-	kichi,
-	kyo,
+	Daikichi,
+	Chukichi,
+	Kichi,
+	Kyo,
 }
 
 func NewFortuneShipType(t time.Time) FortuneSlipType {
 	if IsFirstThreeDayOfTheNewYear(t) {
-		return daikichi
+		return Daikichi
 	}
 
 	rand.Seed(time.Now().UnixNano())
