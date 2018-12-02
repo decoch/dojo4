@@ -9,8 +9,8 @@ type FortuneSlip struct {
 	Result FortuneSlipType `json:"result"`
 }
 
-func DrawFortuneSlip(target time.Time) FortuneSlip {
-	t := NewFortuneShipType(target)
+func DrawFortuneSlip() FortuneSlip {
+	t := NewFortuneShipType(time.Now())
 	return FortuneSlip{
 		Result: t,
 	}
@@ -32,12 +32,16 @@ var fortuneShips = []FortuneSlipType{
 	kyo,
 }
 
-func NewFortuneShipType(target time.Time) FortuneSlipType {
-	if target.Month() == time.January && 1 <= target.Day() && target.Day() <= 3 {
+func NewFortuneShipType(t time.Time) FortuneSlipType {
+	if IsFirstThreeDayOfTheNewYear(t) {
 		return daikichi
 	}
 
 	rand.Seed(time.Now().UnixNano())
 	i := rand.Intn(len(fortuneShips))
 	return fortuneShips[i]
+}
+
+func IsFirstThreeDayOfTheNewYear(t time.Time) bool {
+	return t.Month() == time.January && 1 <= t.Day() && t.Day() <= 3
 }
